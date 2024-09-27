@@ -2,15 +2,7 @@ const { test, describe } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 
-test('dummy returns one', () => {
-    const blogs = []
-
-    const result = listHelper.dummy(blogs)
-    assert.strictEqual(result, 1)
-})
-
-describe('total likes', () => {
-  const listWithOneBlog = [
+const listWithOneBlog = [
     {
       _id: '5a422aa71b54a676234d17f8',
       title: 'Go To Statement Considered Harmful',
@@ -72,6 +64,14 @@ describe('total likes', () => {
     }  
   ]
 
+test('dummy returns one', () => {
+    const blogs = []
+
+    const result = listHelper.dummy(blogs)
+    assert.strictEqual(result, 1)
+})
+
+describe('total likes', () => {
   test('of empty list is zero', () => {
     const result = listHelper.totalLikes([])
     assert.strictEqual(result, 0)
@@ -86,4 +86,33 @@ describe('total likes', () => {
     const result = listHelper.totalLikes(blogs)
     assert.strictEqual(result,36)
   })
+})
+
+describe('favorite blog', () => {
+    const oneBlog = {
+        title: 'Go To Statement Considered Harmful',
+        author: 'Edsger W. Dijkstra',
+        likes: 5
+      }
+    
+    const mostlkedBlog = {
+      title: "Canonical string reduction",
+      author: "Edsger W. Dijkstra",
+      likes: 12
+    }
+
+    test('of empty list is zero', () => {
+        const result = listHelper.favoriteBlog([])
+        assert.strictEqual(result, 0)
+    })
+
+    test('when list has only one blog, the output equals to the only one object', () => {
+        const result = listHelper.favoriteBlog(listWithOneBlog)
+        assert.deepStrictEqual(result,oneBlog)
+    })
+
+    test('of a bigger list presented', () => {
+        const result = listHelper.favoriteBlog(blogs)
+        assert.deepStrictEqual(result,mostlkedBlog)
+    })
 })
