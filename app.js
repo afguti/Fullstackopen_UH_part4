@@ -1,5 +1,6 @@
 const config = require('./utils/config')
 const express = require('express')
+require('express-async-errors')
 const app = express()
 const cors = require('cors')
 const blogsRouter = require('./controllers/blogs')
@@ -8,7 +9,9 @@ const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 
-app.use(morgan('tiny'))
+if (process.env.NODE_ENV !== 'test') {
+    app.use(morgan('tiny'))
+}
 
 logger.info("Connecting to: ", config.MONGODB_URI)
 mongoose.connect(config.MONGODB_URI)
