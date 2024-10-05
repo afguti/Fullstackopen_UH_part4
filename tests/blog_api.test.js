@@ -47,6 +47,23 @@ test('identifier property of the blog posts is named id', async () => {
     assert.strictEqual(identify.length, initialBlogs.length)
 })
 
+test('a valid note can be added', async () => {
+    const newBlog = {
+        title: 'Blog number three',
+        author: 'lliulli',
+        url: "http://sample3.com",
+        likes: 16
+    }
+    await api.post('/api/blogs')
+        .send(newBlog).expect(201).expect('Content-type', /application\/json/)
+    
+    const blogsAtEnd = await api.get('/api/blogs')
+    assert.strictEqual(blogsAtEnd.body.length,initialBlogs.length+1)
+
+    const titles = blogsAtEnd.body.map(x => x.title)
+    assert(titles.includes('Blog number three'))
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
