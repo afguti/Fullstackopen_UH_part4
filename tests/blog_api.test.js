@@ -41,6 +41,12 @@ test('there are two blogs', async () => {
     assert.strictEqual(response.body.length, initialBlogs.length)
 })
 
+test('identifier property of the blog posts is named id', async () => {
+    const response = await api.get('/api/blogs')
+    const identify = response.body.map(x => x.id)
+    assert.strictEqual(identify.length, initialBlogs.length)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
