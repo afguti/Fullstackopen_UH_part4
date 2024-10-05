@@ -64,6 +64,20 @@ test('a valid note can be added', async () => {
     assert(titles.includes('Blog number three'))
 })
 
+test.only('Blog without likes is by default 0', async () => {
+    const newBlog = {
+        title: 'Without likes',
+        author: 'error checker',
+        url: "http://nolikes.com",
+    }
+
+    await api.post('/api/blogs')
+        .send(newBlog).expect(201)
+    
+    const blogsAtEnd = await api.get('/api/blogs')
+    assert.strictEqual(blogsAtEnd.body[initialBlogs.length].likes,0)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
