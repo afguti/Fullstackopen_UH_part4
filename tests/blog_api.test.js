@@ -1,4 +1,4 @@
-const { test, after, beforeEach } = require('node:test')
+const { test, after, beforeEach, describe } = require('node:test')
 const Blog = require('../models/blog')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
@@ -89,6 +89,22 @@ test('if title or url is missing we get a bad request', async () => {
 
     const blogsAtEnd = await api.get('/api/blogs')
     assert.strictEqual(blogsAtEnd.body.length,initialBlogs.length)
+})
+
+describe('deletion of a blog', () => {
+    test('succeeds with status code 204 if id is valid', async () => {
+        const blogsAtStart = await api.get('/api/blogs')
+        const blogToDelete = blogsAtStart.body[0]
+
+        await api
+            .delete(`/api/blogs/${blogToDelete.id}`).expect(204)
+
+        const blogsAtEnd = await api.get('/api/blogs')
+        assert.strictEqual(blogsAtEnd.body.length,initialBlogs.length-1)
+
+        const titles = blogsAtEnd.body.map(x => x.title)
+        assert(!titles.includes(blogToDelete.titles))
+    })
 })
 
 after(async () => {
