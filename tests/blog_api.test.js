@@ -107,6 +107,25 @@ describe('deletion of a blog', () => {
     })
 })
 
+test('Succeeds updates number of likes of existing blog', async () => {
+    const blogsAtStart = await api.get('/api/blogs')
+    const blogToUpdate = blogsAtStart.body[0]
+
+    const updatedBlog = { ...blogToUpdate, likes: blogToUpdate.likes + 1 }
+
+    const response = await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(updatedBlog)
+        .expect(200)
+
+    assert.strictEqual(response.body.likes, blogToUpdate.likes + 1)
+
+    const blogsAtEnd = await api.get('/api/blogs')
+    const updatedBlogFromDB = blogsAtEnd.body.find(blog => blog.id === blogToUpdate.id)
+
+    assert.strictEqual(updatedBlogFromDB.likes, blogToUpdate.likes + 1)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
