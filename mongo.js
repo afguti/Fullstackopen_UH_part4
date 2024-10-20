@@ -25,14 +25,16 @@ const blog = new Blog({
   likes: 4
 })
 
-blog.save().then(() => {
-  console.log('note saved!')
-  mongoose.connection.close()
-})
-
-//Note.find({}).then(result => {
-//    result.forEach(note => {
-//        console.log("note:",note)
-//    })
-//    mongoose.connection.close()
+//blog.save().then(() => {
+//  console.log('note saved!')
+//  mongoose.connection.close()
 //})
+
+
+
+Blog.find({}).then(result => {
+    result.forEach(note => {
+        console.log("note:",note)
+    })
+    mongoose.connection.close()
+})
