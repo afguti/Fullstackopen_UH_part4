@@ -12,10 +12,10 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 
 if (process.env.NODE_ENV !== 'test') {
-    app.use(morgan('tiny'))
+  app.use(morgan('tiny'))
 }
 
-logger.info("Connecting to: ", config.MONGODB_URI)
+logger.info('Connecting to: ', config.MONGODB_URI)
 mongoose.connect(config.MONGODB_URI)
 
 app.use(cors())

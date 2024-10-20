@@ -6,7 +6,8 @@
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development nodemon index.js",
-    "test": "NODE_ENV=test node --test"
+    "test": "NODE_ENV=test node --test",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,10 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@stylistic/eslint-plugin-js": "^2.9.0",
+    "eslint": "^9.13.0",
+    "globals": "^15.11.0",
     "nodemon": "^3.1.7",
     "supertest": "^7.0.0"
   }

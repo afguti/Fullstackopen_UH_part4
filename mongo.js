@@ -20,8 +20,8 @@ const Blog = mongoose.model('Blog', blogSchema)
 
 const blog = new Blog({
   title: 'Adding from mongo.js',
-  author: "angel",
-  url: "http://sample.com",
+  author: 'angel',
+  url: 'http://sample.com',
   likes: 4
 })
 
@@ -33,8 +33,8 @@ const blog = new Blog({
 
 
 Blog.find({}).then(result => {
-    result.forEach(note => {
-        console.log("note:",note)
-    })
-    mongoose.connection.close()
+  result.forEach(note => {
+    console.log('note:',note)
+  })
+  mongoose.connection.close()
 })
